@@ -88,19 +88,24 @@ public class StorageFile {
         /* Note: Note the 'try with resource' statement below.
          * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
          */
-        try (final Writer fileWriter =
-                     new BufferedWriter(new FileWriter(path.toFile()))) {
-
-            final AdaptedAddressBook toSave = new AdaptedAddressBook(addressBook);
-            final Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(toSave, fileWriter);
-
-        } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path);
-        } catch (JAXBException jaxbe) {
-            throw new StorageOperationException("Error converting address book into storage format");
-        }
+    	
+    	if(!path.toFile().exists()){
+    		throw new StorageOperationException("Storage file is deleted!");
+    	} else {
+	        try (final Writer fileWriter =
+	                     new BufferedWriter(new FileWriter(path.toFile()))) {
+	
+	            final AdaptedAddressBook toSave = new AdaptedAddressBook(addressBook);
+	            final Marshaller marshaller = jaxbContext.createMarshaller();
+	            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	            marshaller.marshal(toSave, fileWriter);
+	
+	        } catch (IOException ioe) {
+	            throw new StorageOperationException("Error writing to file: " + path);
+	        } catch (JAXBException jaxbe) {
+	            throw new StorageOperationException("Error converting address book into storage format");
+	        }
+    	}
     }
 
     /**
