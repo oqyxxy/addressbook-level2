@@ -29,13 +29,25 @@ public class Address {
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        String[] addressSplit = address.split(", ");
-    	this.setBlock(new Block(addressSplit[0]));
-    	this.setStreet(new Street(addressSplit[1]));
-    	this.setUnit(new Unit(addressSplit[2]));
-    	this.setPostalCode(new PostalCode(addressSplit[3]));
+        AddAddressComponent(address);
         this.value = address;
     }
+
+	private void AddAddressComponent(String address) throws IllegalValueException {
+		String[] addressSplit = address.split(", ");
+        if (addressSplit.length > 0) {
+        	this.setBlock(new Block(addressSplit[0]));
+        }
+        if (addressSplit.length > 1) {
+        	this.setStreet(new Street(addressSplit[1]));
+        }
+        if (addressSplit.length > 2) {
+        	this.setUnit(new Unit(addressSplit[2]));
+        }
+        if (addressSplit.length > 3) {
+        	this.setPostalCode(new PostalCode(addressSplit[3]));
+        }
+	}
 
     /**
      * Returns true if a given string is a valid person email.
