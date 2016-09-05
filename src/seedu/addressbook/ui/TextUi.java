@@ -15,9 +15,10 @@ import java.util.Scanner;
  * Text UI of the application.
  */
 public class TextUi {
-	/** Offset required to convert between 1-indexing and 0-indexing.  */
+
+    /** Offset required to convert between 1-indexing and 0-indexing.  */
     public static final int DISPLAYED_INDEX_OFFSET = 1;
-    
+
     /** Format of a comment input line. Comment lines are silently consumed when reading user input. */
     private static final String COMMENT_LINE_FORMAT_REGEX = "#.*";
 
@@ -69,7 +70,7 @@ public class TextUi {
             fullInputLine = in.nextLine();
         }
 
-        showToUser(Formatter.addLineInput(fullInputLine));
+        showToUser("[Command entered:" + fullInputLine + "]");
         return fullInputLine;
     }
 
@@ -90,7 +91,7 @@ public class TextUi {
     /** Shows message(s) to the user */
     public void showToUser(String... message) {
         for (String m : message) {
-            out.println(Formatter.formatShowToUserMessage(m));
+            out.println(Formatter.FormatShowToUser(m));
         }
     }
 
@@ -140,7 +141,7 @@ public class TextUi {
      * @param visibleIndex visible index for this listing
      */
     private static String getIndexedListItem(int visibleIndex, String listItem) {
-    	return Formatter.formatListItem(visibleIndex, listItem);
+        return Formatter.formatListItem(visibleIndex, listItem);
     }
 
 }

@@ -26,33 +26,38 @@ public class Formatter {
 		return String.format(MESSAGE_USING_STORAGE_FILE, path);
 	}
     
-    public static String formatWelcomeMessage(String version, String storageFilePath) {
-    	return DIVIDER + 
-    			DIVIDER + 
-    			MESSAGE_WELCOME + 
-    			version + 
-    			MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE + 
-    			Formatter.formatStorageFilePath(storageFilePath) + 
-    			DIVIDER;
+    public static String[] formatWelcomeMessage(String version, String storageFilePath) {
+    	String[] outputString = {DIVIDER, 
+    			DIVIDER, 
+    			MESSAGE_WELCOME,
+    			version,
+    			MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE,
+    			Formatter.formatStorageFilePath(storageFilePath),
+    			DIVIDER
+    	};
+    	return outputString;
 	}
     
-    public static String formatGoodbyeMessage() {
-		return MESSAGE_GOODBYE + DIVIDER + DIVIDER;
+    public static String[] formatGoodbyeMessage() {
+    	String[] outputString = {MESSAGE_GOODBYE, DIVIDER, DIVIDER};
+    	return outputString;
 	}
     
-    public static String formatInitFailedMessage() {
-		return MESSAGE_INIT_FAILED + DIVIDER + DIVIDER;
+    public static String[] formatInitFailedMessage() {
+    	String[] outputString = {MESSAGE_INIT_FAILED, DIVIDER, DIVIDER};
+    	return outputString;
 	}
     
-    public static String formatShowToUserMessage(String message) {
-		return LINE_PREFIX + message.replace("\n", LS + LINE_PREFIX);
-	}
-    
-    public static String formatShowResultToUserMessage(String message) {
-		return message + DIVIDER;
+    public static String[] formatShowResultToUserMessage(String message) {
+    	String[] outputString = {message, DIVIDER};
+    	return outputString;
 	}
 
     public static String formatListItem(int visibleIndex, String listItem) {
 		return String.format(MESSAGE_INDEXED_LIST_ITEM, visibleIndex, listItem);
 	}
+    
+    public static String FormatShowToUser(String message) {
+    	return LINE_PREFIX + message.replace("\n", LS + LINE_PREFIX);
+    }
 }
