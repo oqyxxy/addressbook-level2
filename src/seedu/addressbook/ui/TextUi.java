@@ -101,7 +101,8 @@ public class TextUi {
                 DIVIDER);
     }
 
-    public void showGoodbyeMessage() {
+    public void showGoodbyeMessage(String log) {
+    	showToUser(MESSAGE_TAG_HISTORY, log, DIVIDER);
         showToUser(MESSAGE_GOODBYE, DIVIDER, DIVIDER);
     }
 

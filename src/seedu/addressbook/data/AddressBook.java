@@ -1,6 +1,7 @@
 package seedu.addressbook.data;
 
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.tag.Tagging;
 import seedu.addressbook.data.person.UniquePersonList.*;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.data.tag.UniqueTagList.*;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 /**
  * Represents the entire address book. Contains the data of the address book.
@@ -22,7 +24,9 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    private final Tagging tagHistory = new Tagging(); 
 
+    
     /**
      * Creates an empty address book.
      */
@@ -54,6 +58,11 @@ public class AddressBook {
     private void syncTagsWithMasterList(Person person) {
         final UniqueTagList personTags = person.getTags();
         allTags.mergeFrom(personTags);
+        /*
+        for (Tag tag : personTags) {
+        	tagHistory.addTagHistory(person.getName().toString(), tag.toString(), "+");
+        }
+        */
 
         // Create map with values = tag object references in the master list
         final Map<Tag, Tag> masterTagObjects = new HashMap<>();
@@ -79,6 +88,10 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         syncTagsWithMasterList(toAdd);
         allPersons.add(toAdd);
+        List<Tag> allTags = toAdd.getTags().getInternalList();
+        for(Tag tag: allTags){
+            tagHistory.addTagHistory(toAdd.getName().toString(), tag.toString(), "+");
+    	}
     }
 
     /**
@@ -111,6 +124,10 @@ public class AddressBook {
      */
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
+        List<Tag> allTags = toRemove.getTags().getInternalList();
+        for(Tag tag: allTags){
+            tagHistory.addTagHistory(toRemove.getName().toString(), tag.toString(), "-");
+    	}
     }
 
     /**
@@ -142,5 +159,9 @@ public class AddressBook {
      */
     public UniqueTagList getAllTags() {
         return new UniqueTagList(allTags);
+    }
+    
+    public String getTagHistoryLog() {
+    	return tagHistory.getTagHistory();
     }
 }
